@@ -1,0 +1,153 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 35,
+    "spacing": 4,
+    "margin-top": 5,
+    "margin-bottom":5,
+
+    // Choose the order of the modules
+
+    "modules-left":[  "custom/media", "tray", "hyprland/workspaces"],
+    "modules-center":[ "idle_inhibitor", "custom/pacman", "pulseaudio", "cpu", "memory", "temperature", "backlight", "keyboard-state",  "battery", "battery#bat2", "network", "clock"],
+    "modules-right":["hyprland/tags","custom/power"],
+
+    // Modules configuration
+
+    "hyprland/tags": {
+        "num-tags": 5,
+    },
+    "keyboard-state": {
+        "numlock": true,
+        "capslock": true,
+        "format": " {name} {icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+        "icon-size": 20,
+        "spacing": 10
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+	"format": "{:%I:%M %p}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
+    },
+    "memory": {
+        "format": "{}% "
+    },
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        // "format-critical": "{temperatureC}°C {icon}",
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", ""]
+    },
+    "battery": {
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "network": {
+        // "interface": "wlp2*", // (Optional) To force the use of this interface
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "Connected  ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click-right": "bash ~/.config/rofi/wifi_menu/rofi_wifi_menu"
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": "{icon} {format_source}",
+        "format-muted": "{format_source}",
+        "format-source": "",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 20,
+        "format-icons": {
+            "spotify": " ",
+            "default": " "
+        },
+        "escape": true,
+        "exec": "$HOME/.config/system_scripts/mediaplayer.py 2> /dev/null",
+        "on-click": "playerctl play-pause"
+    },
+    "custom/launcher":{
+        "format": "",
+        "on-click": "sleep 0.5; wofi --show drun",
+        "on-click-right": "killall wofi"
+    },
+    "custom/power":{
+        "format": "  ",
+        "on-click": "sleep 0.5; nwg-bar",
+        "on-click-right": "killall nwg-bar"
+    },
+    "custom/pacman": {
+      "format": "{icon}{}",
+      "return-type": "json",
+      "format-icons": {
+        "pending-updates": " ",
+        "updated": ""
+      },
+      "exec-if": "which waybar-updates",
+      "exec": "waybar-updates"
+    },
+    "custom/snip":{
+        "format": " ",
+        "on-click": "grimshot --notify save area $HOME/Pictures/$(zenity --entry --text 'Set filename:' --entry-text '.png')"
+    },
+    "custom/wallpaper":{
+        "format":" ",
+        "on-click": "bash ~/.config/system_scripts/pkill_bc"
+    }
+}
+
